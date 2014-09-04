@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+var program = require('commander')
+  .version(require('../package.json').version)
+  .usage('<name> [repository]')
+  .parse(process.argv);
+
+var path = require('path');
+var fs = require('fs');
+
+var name = program.args[0];
+if (!name) throw new Error('no name defined');
+var repository = program.args[1] || 'ntran13';
+if (!~repository.indexOf('/')) repository += '/' + name;
+
+fs.mkdirSync(name);
+
+var template = path.join(__dirname, '..', 'template');
+
+// package.json
+var package = require('../template/package.json');
+package.name = name;
+package.repository = repository;
+fs.writeFileSync(path.join(name, 'package.json'), JSON.stringify(package, null, 2));
+
+// dotfiles which have no variables
+fs.writeFileSync(path.join(name, '.gitignore'), fs.readFileSync(path.join(template, 'gitignore')));
+fs.writeFileSync(path.join(name, '.travis.yml'), fs.readFileSync(path.join(template, 'travis.yml')));
+
+var license = fs.readFileSync(path.join(template, 'LICENSE'), 'utf8');
+var readme = fs.readFileSync(path.join(template, 'README.md'), 'utf8');
+fs.writeFileSync(path.join(name, 'LICENSE'), replace(license));
+fs.writeFileSync(path.join(name, 'README.md'), replace(readme));
+
+function replace(string) {
+  return string
+    .replace(/\{\{name\}\}/g, name)
+    .replace(/\{\{repository\}\}/g, repository)
+    .replace(/\{\{year\}\}/g, new Date().getFullYear());
+}

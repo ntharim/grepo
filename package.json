@@ -1,0 +1,12 @@
+{
+  "name": "grepo",
+  "description": "Generate repository",
+  "version": "0.0.1",
+  "author": "Nathan Tran <ntran013@gmail.com>",
+  "license": "MIT",
+  "repository": "ntran13/grepo",
+  "dependencies": {
+    "commander": "*"
+  },
+  "bin": "bin/grepo"
+}
