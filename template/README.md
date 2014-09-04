@@ -7,8 +7,6 @@
 [![Test coverage][coveralls-image]][coveralls-url]
 [![Dependency Status][david-image]][david-url]
 [![License][license-image]][license-url]
-[![Downloads][downloads-image]][downloads-url]
-[![Gittip][gittip-image]][gittip-url]
 
 [npm-image]: https://img.shields.io/npm/v/{{name}}.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/{{name}}
